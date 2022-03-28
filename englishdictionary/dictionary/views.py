@@ -1,3 +1,4 @@
+from typing import Dict
 import dictionary
 from django.shortcuts import render
 from PyDictionary import PyDictionary
@@ -9,11 +10,16 @@ def word(request):
     search = request.GET.get('search')
     dictionary = PyDictionary()
     meaning = dictionary.meaning(search)
-    synonyms = dictionary.synonym(search)
-    antonyms = dictionary.antonym(search)
+    
+
+    #print(type(meaning))
+    if type(meaning) is not dict:
+        meaning = "Meaning not found"
+
+    
+    
+    
     context = {
         'meaning': meaning,
-        'synonyms': synonyms,
-        'antonyms': antonyms
     }
     return render(request, 'word.html', context)
